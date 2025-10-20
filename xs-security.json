@@ -1,0 +1,45 @@
+{
+  "xsappname": "myhanaapp",
+  "tenant-mode": "dedicated",
+  
+ "scopes": [
+  {
+   "name": "$XSAPPNAME.support",
+   "description": "support"
+  },
+  {
+   "name": "$XSAPPNAME.admin",
+   "description": "admin this role for admin incident"
+  }
+ ],
+ "attributes": [],
+ "role-templates": [
+  {
+   "name": "support",
+   "description": "for manage incident",
+   "scope-references": [
+    "$XSAPPNAME.support"
+   ],
+   "attribute-references": []
+  },
+  {
+   "name": "admin",
+   "description": "generated",
+   "scope-references": [
+    "$XSAPPNAME.admin"
+   ],
+   "attribute-references": []
+  }
+ ],
+ "oauth2-configuration": {
+  "token-validity": 900,
+  "redirect-uris": [
+    "https://*.applicationstudio.cloud.sap/login/callback",
+   "https://02528e42trial.us10cf.trial.applicationstudio.cloud.sap/"
+  ],
+  "credential-types": [
+   "binding-secret",
+   "x509"
+  ]
+ }
+}
