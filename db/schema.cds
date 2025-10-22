@@ -1,19 +1,23 @@
 namespace cap.incident;
 using { managed,cuid, sap.common.CodeList } from '@sap/cds/common';
 
+
+ ///managed : This entity automatically gets audit fields that track who created and who last updated a record, and when
+
 /**
 * Incidents created by Customers.
 */
 entity Incidents : cuid, managed {  
 customer     : Association to Customers;
 title        : String  @title : 'Title';
-urgency        : Association to Urgency default 'M';
-status         : Association to Status default 'N';
+urgency        : Association to Urgency default 'M';  //Priority level, default Medium
+status         : Association to Status default 'N';   // // Current status, default New
 conversation  : Composition of many {
     key ID    : UUID;
-    timestamp : type of managed:createdAt;
-    author    : type of managed:createdBy;
-    message   : String;
+    timestamp : type of managed:createdAt;      // Auto-filled creation timestamp
+    author    : type of managed:createdBy;     // Auto-filled user who added the message
+    message   : String;                       // Actual message text
+
 };
 
 }
@@ -25,11 +29,11 @@ entity Customers : managed {
 key ID        : String;
 firstName     : String;
 lastName      : String;
-name          : String = trim(firstName ||' '|| lastName);
+name          : String = trim(firstName ||' '|| lastName); //combines first and last names, removing extra spaces.
 email         : EMailAddress;
 phone         : PhoneNumber;
 incidents     : Association to many Incidents on incidents.customer = $self;
-creditCardNo  : String(16) @assert.format: '^[1-9]\d{15}$';
+creditCardNo  : String(16) @assert.format: '^[1-9]\d{15}$'; // Must be exactly 16 digits and cannot start with 0
 addresses     : Composition of many Addresses on addresses.customer = $self;
 }
 
