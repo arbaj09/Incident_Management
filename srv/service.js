@@ -35,6 +35,8 @@ module.exports = class ProcessorService extends cds.ApplicationService { init() 
   return super.init()
 
 }
+
+// the urgency_code if titie i have urgent word the change urgency_code to "H" during creation
   ChangeUrgencyDueToSubject(req){
 
    let urgent = req.data.title?.match(/urgent/i)
@@ -47,7 +49,7 @@ module.exports = class ProcessorService extends cds.ApplicationService { init() 
     
   }
 
-
+// if status_code is "C"(closed) then user can't modify during update the incident
   async onUpdate(req){
     console.log('req.subject:',req.subject)
 
@@ -59,6 +61,8 @@ module.exports = class ProcessorService extends cds.ApplicationService { init() 
 
 
   }
+
+  // validtion on title and status_code
     onValidation(req){
 
     console.log( 'val req.data' ,req.data)
@@ -78,7 +82,8 @@ module.exports = class ProcessorService extends cds.ApplicationService { init() 
    
     
   }
-  // AutoFill Message with default
+  // AutoFill Message with default 
+  // whenver new incident created then fill message field as "New Incident Created"
   AutoFillMessage(req){
 
 
